@@ -160,6 +160,18 @@ A few of the harder bugs, because the fix is usually more interesting than the f
 | Scope | companion app + core logic | all 9 service modules | dataset tooling |
 | Verified this session | — | all passing | all passing |
 
+## Where this is headed
+
+Everything above is real and running today. This part isn't — it's the actual direction, not marketing copy, and it's labeled that way on purpose:
+
+<div align="center">
+
+[![vision](https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=16&duration=2800&pause=1000&color=818CF8&center=true&vCenter=true&width=760&lines=someday%3A+pick+up+where+I+left+off%2C+on+any+device;someday%3A+keep+an+eye+on+my+code+while+I%27m+away%2C+flag+what+breaks;someday%3A+find+that+paper+from+last+week%2C+not+just+the+last+file+I+touched;none+of+that+exists+yet+-+ask+me+again+once+it+does)](https://github.com/Sur27codes/FRIDAY)
+
+</div>
+
+The reason the rest of this README is as restrained as it is: the architecture above — one model call, local validation, fail-closed everywhere — is what has to be true *before* any of this is worth building. An assistant that can touch your files or your calendar is only as trustworthy as the system in front of it that's willing to say "I don't actually know." That part comes first.
+
 ## Getting started
 
 ```bash
