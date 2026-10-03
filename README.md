@@ -2,25 +2,11 @@
 
 A multi-process AI runtime for macOS: a Swift companion app supervises three Go daemons over typed IPC, with a local-authority layer sitting between an LLM and anything it's allowed to say or do.
 
-```
-$ Hey Friday
-  wake confirmed — listening
+<div align="center">
 
-$ what's my battery at
-  11% — and no, I'm not rounding up to make you feel better
+[![demo](https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=15&duration=2400&pause=850&color=64748B&center=true&vCenter=true&width=760&lines=Hey+Friday;wake+confirmed+-+listening;what%27s+my+battery+at;11%25+-+and+no%2C+I%27m+not+rounding+up+to+make+you+feel+better;%28no+wake+word+needed%29+why%27s+the+sky+red+at+sunset;that%27s+just+physics%2C+I+don%27t+need+a+capability+for+that;say+Hey+Friday+again+mid-answer%2C+any+time;stopped.+that%27s+not+a+suggestion+-+it%27s+how+barge-in+works;be+honest+with+me;that%27s+not+really+optional+for+me;...silence;session+closed+-+back+to+passive+listening)](https://github.com/Sur27codes/FRIDAY)
 
-$ (no wake word needed) why's the sky red at sunset
-  that's just physics, I don't need a capability for that
-
-$ say "Hey Friday" again mid-answer, any time
-  stopped. that's not a suggestion — it's how barge-in works
-
-$ be honest with me
-  that's not really optional for me
-
-$ ...silence
-  session closed — back to passive listening
-```
+</div>
 
 ![Swift](https://img.shields.io/badge/Swift-macOS_13+-F05138?style=flat-square&logo=swift&logoColor=white)
 ![Go](https://img.shields.io/badge/Go-1.26-00ADD8?style=flat-square&logo=go&logoColor=white)
@@ -178,13 +164,11 @@ A few of the harder bugs, because the fix is usually more interesting than the f
 
 Everything above is real and running today. None of this block is — it's the actual direction, not marketing copy, and every line admits it:
 
-```diff
-- none of this is built yet
-+ someday: open the file, fix what's safe, flag what needs your okay
-+ someday: draft the email, but show you exactly what it says before it sends
-+ someday: touch your calendar, your files, your browser — always observed, never blind
-+ someday: real control, not just talk — the same validation layer just has to reach further first
-```
+<div align="center">
+
+[![vision](https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=15&duration=2900&pause=1000&color=818CF8&center=true&vCenter=true&width=820&lines=none+of+this+is+built+yet;someday%3A+open+the+file%2C+fix+what%27s+safe%2C+flag+what+needs+your+okay;someday%3A+draft+the+email%2C+but+show+you+exactly+what+it+says+first;someday%3A+touch+your+calendar%2C+files%2C+browser+-+always+observed%2C+never+blind;someday%3A+real+control%2C+not+just+talk+-+validation+just+has+to+reach+further)](https://github.com/Sur27codes/FRIDAY)
+
+</div>
 
 That list is short on purpose. Every line is a *consequential* action — touching a file, sending something on your behalf — and the current architecture flatly refuses to hand those to a model without a local system checking first. Control gets added in the order trust is earned: the one-call, locally-validated, fail-closed core above isn't a smaller version of the plan, it's the precondition for the rest of it.
 
