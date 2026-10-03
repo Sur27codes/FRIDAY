@@ -2,6 +2,12 @@
 
 A multi-process AI runtime for macOS: a Swift companion app supervises three Go daemons over typed IPC, with a local-authority layer sitting between an LLM and anything it's allowed to say or do.
 
+<div align="center">
+
+[![demo](https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=16&duration=2200&pause=900&color=64748B&center=true&vCenter=true&width=560&lines=Hey+Friday;listening...;What%27s+my+battery+at%3F;checking+the+real+value+-+not+guessing+-+74%25)](https://github.com/Sur27codes/FRIDAY)
+
+</div>
+
 ![Swift](https://img.shields.io/badge/Swift-macOS_13+-F05138?style=flat-square&logo=swift&logoColor=white)
 ![Go](https://img.shields.io/badge/Go-1.26-00ADD8?style=flat-square&logo=go&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat-square&logo=python&logoColor=white)
@@ -12,9 +18,9 @@ A multi-process AI runtime for macOS: a Swift companion app supervises three Go 
 
 ### The idea
 
-Most voice assistants are a thin shell around a language model: you talk, the model answers, the app repeats whatever it said. FRIDAY doesn't work that way. The model gets exactly one call per turn, and whatever it returns is a *proposal* — a candidate answer that a local system checks before anything reaches a speaker. If the model says "I sent that email" and the runtime has no record of an email being sent, that sentence doesn't go out. If a question needs something the model can't actually know — your battery percentage, your calendar, whether a capability even exists — the model doesn't get to improvise an answer; the runtime either provides the real value or the system says it can't.
+Most voice assistants are a thin shell around a language model: you talk, the model answers, the app repeats whatever it said. FRIDAY doesn't work that way. The model gets exactly one call per turn, and whatever it returns is a *proposal* — a candidate answer that a local system checks before anything reaches a speaker. If the model says "I sent that email" and the runtime has no record of an email being sent, that sentence doesn't go out. If a question needs something the model can't actually know — your battery percentage, your calendar, whether a capability even exists — the model doesn't get to improvise; the runtime either supplies the real value or the system says it can't.
 
-The interesting engineering isn't the LLM call. It's everything built to keep that one call honest: a local classifier that decides whether a request needs a capability at all, a deterministic runtime that owns the actual facts, and a validation pass that rejects a response claiming something happened that didn't.
+The interesting engineering isn't the LLM call. It's everything built to keep that one call honest.
 
 ## Architecture
 
@@ -43,6 +49,56 @@ graph TD
 The three Go processes are deliberately separate, not one monolith: `policyengined` owns what's allowed, `capabilitybusd` routes capability calls, `friday-daemon` holds runtime state and intent resolution. Each talks to the others only over a length-prefixed JSON protocol on Unix domain sockets — nothing shares memory, so a crash in one is a crash in one.
 
 The Swift side is an `actor`-isolated supervisor, not a shell script. It owns process lifecycle for all three daemons: health polling, bounded crash-restart with backoff, a crash-loop cutoff so a broken daemon doesn't spin forever, and orphan recovery that's fail-closed by construction — a leftover process only ever gets reclaimed if a sidecar record can prove it's this app's own orphan from a previous run. An unidentified live process on the expected socket path is never touched, full stop.
+
+## One turn, start to finish
+
+```mermaid
+sequenceDiagram
+    participant U as You
+    participant W as Wake detector
+    participant S as Speech-to-text
+    participant R as friday-daemon
+    participant M as Model (one call)
+    participant T as TTS
+
+    U->>W: "Hey Friday"
+    W->>S: wake confirmed, open mic
+    U->>S: spoken command
+    S->>R: finalized transcript
+    R->>R: local classification + authoritative facts
+    R->>M: one request
+    M-->>R: proposed answer
+    R->>R: recompute + ResponseValidation
+    R->>T: validated response text
+    T-->>U: spoken answer
+```
+
+One round trip to the model, not a chain of them — the classification before it and the validation after it both happen locally, which is also why a single bad response can't spiral into a retry loop.
+
+## The microphone's actual state machine
+
+This is the real state machine driving the menu bar icon — not a simplification of it:
+
+```mermaid
+stateDiagram-v2
+    [*] --> microphoneOff
+    microphoneOff --> wakeOnly: enable
+    wakeOnly --> listening: "Hey Friday"
+    listening --> processing: command finalized
+    listening --> wakeOnly: timeout / no speech
+    processing --> speaking: response ready
+    speaking --> awaitingFollowUp: playback finished
+    speaking --> listening: wake word (barge-in)
+    speaking --> wakeOnly: synthesis failed
+    awaitingFollowUp --> processing: follow-up heard, no wake word needed
+    awaitingFollowUp --> wakeOnly: silence timeout
+    wakeOnly --> microphoneOff: disable
+    listening --> microphoneOff: disable
+    speaking --> microphoneOff: disable
+    awaitingFollowUp --> microphoneOff: disable
+```
+
+The detail that matters most here: `speaking → awaitingFollowUp` only fires once real audio playback has finished — not when the model finishes generating, not on a timer. Those are two different events, and conflating them is exactly the kind of bug that makes an assistant cut itself off mid-sentence.
 
 ## Voice pipeline
 
