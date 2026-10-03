@@ -1,0 +1,6 @@
+{
+  "protocol_version": 1,
+  "request_id": "golden-req-001",
+  "correlation_id": "golden-corr-001",
+  "text": "check system status"
+}

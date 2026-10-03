@@ -1,0 +1,15 @@
+{
+  "provenance_id": "prov-example-0001",
+  "speaker_id": "spk-example-001",
+  "rights_record_id": "rights-example-0001",
+  "session_id": "sess-example-2026-09-09-a",
+  "session_date": "2026-09-09",
+  "studio_or_location": "example-studio-1",
+  "engineer": "eng-example-001",
+  "mic": "example-condenser-mic-A",
+  "interface": "example-audio-interface-A",
+  "room": "example-treated-room-1",
+  "rights_scope_summary": "Example only: covers recording, synthetic voice generation, cloud + local TTS conditioning, non-commercial use, pending commercial-use amendment.",
+  "created_at": "2026-09-09T15:00:00Z",
+  "notes": "synthetic example provenance record, no real performer identity or contract content"
+}

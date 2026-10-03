@@ -1,0 +1,8 @@
+{
+  "protocol_version": 1,
+  "request_id": "golden-req-001",
+  "correlation_id": "golden-corr-001",
+  "task_id": "golden-task-001",
+  "outcome": "SUCCESS",
+  "text": "System status retrieved successfully."
+}

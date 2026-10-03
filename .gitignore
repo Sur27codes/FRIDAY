@@ -1,0 +1,49 @@
+# --- Private planning / internal docs (not published yet) ---
+/docs/
+/FRIDAY_MASTER_VISION.md
+/.claude/
+
+# --- Secrets ---
+.env
+.env.*
+*.pem
+*.p12
+*.mobileprovision
+*.cer
+*credentials*.json
+*secrets*.json
+
+# --- Build output ---
+.build/
+.swiftpm/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+/.dev/
+
+# --- Vendored binaries & model weights (fetched by scripts/fetch_models.sh) ---
+macos/FridayCompanion/Vendor/sherpa-onnx/lib/
+macos/FridayCompanion/Vendor/sherpa-onnx/model-provenance/bpe.model
+macos/FridayCompanion/Sources/FridayCompanionKit/Resources/sherpa-onnx-kws-model/*.onnx
+
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+.venv-*/
+*.egg-info/
+
+# --- Node (none currently used, kept for safety) ---
+node_modules/
+
+# --- OS / editor noise ---
+.DS_Store
+.vscode/
+.idea/
+
+# --- Logs, diagnostics, recordings ---
+*.log
+*.diag
+*.ips
+*.mov
+*.mp4

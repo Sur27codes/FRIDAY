@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://friday.local/schemas/voice-v2/dataset-manifest.schema.json",
+  "title": "FRIDAY Original Speaker V2 — Dataset Manifest",
+  "description": "P2-M5V9-B.3D.2. Describes one recording session's set of voice assets. Contains NO private contract content and NO real performer PII — speaker_id, rights_record_id, and engineer-style fields are opaque references that resolve elsewhere, in secure, private, non-repository storage (see docs/voice-v2/FRIDAY-V2-PROVENANCE-SPEC.md). NOTE: this schema enforces the SHAPE of each asset entry only. Cross-entry invariants — asset_id uniqueness across the whole manifest, and resolvability of each rights_record_id against a real provenance record — are enforced by the companion validator/QC tool (schemas/voice-v2/validate_examples.py; production tool: friday-voice-dataset-qc, designed in docs/voice-v2/FRIDAY-V2-DATASET-PLAN.md), not by this schema alone.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest_id", "speaker_id", "session_id", "assets"],
+  "properties": {
+    "manifest_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this manifest file."
+    },
+    "speaker_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Opaque reference to the performer. Never a real name — resolves to a real identity only in secure, private, non-repository storage."
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for the recording session this manifest documents."
+    },
+    "manifest_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/assetEntry" }
+    }
+  },
+  "$defs": {
+    "assetEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "asset_id",
+        "filename",
+        "transcript",
+        "delivery_mode",
+        "language",
+        "locale",
+        "speaker_id",
+        "session_id",
+        "take_number",
+        "approved",
+        "sample_rate",
+        "bit_depth",
+        "channels",
+        "duration_ms",
+        "peak_dbfs",
+        "checksum_sha256",
+        "recorded_at",
+        "mic",
+        "interface",
+        "room",
+        "rights_record_id"
+      ],
+      "properties": {
+        "asset_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Unique identifier for this specific asset. Uniqueness ACROSS the manifest's assets array is enforced by the companion validator, not by this per-item schema."
+        },
+        "filename": {
+          "type": "string",
+          "pattern": "^friday_v2_[a-zA-Z]+_[0-9]{4}\\.wav$",
+          "description": "Deterministic naming per docs/voice-v2/FRIDAY-V2-DATASET-PLAN.md §File naming."
+        },
+        "transcript": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Exact text spoken on this take."
+        },
+        "delivery_mode": {
+          "type": "string",
+          "enum": ["neutral", "friendly", "professional", "focused", "serious", "lightPlayful", "explanatory"]
+        },
+        "language": {
+          "type": "string",
+          "minLength": 2,
+          "description": "e.g. 'en'."
+        },
+        "locale": {
+          "type": "string",
+          "minLength": 2,
+          "description": "e.g. 'en-US'."
+        },
+        "speaker_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "take_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "approved": {
+          "type": "boolean",
+          "description": "Whether this asset has passed QC and rights checks and may be used downstream."
+        },
+        "sample_rate": {
+          "type": "integer",
+          "enum": [44100, 48000, 96000],
+          "description": "Master recording sample rate per FRIDAY-V2-RECORDING-SPEC.md (48kHz target; 44100/96000 tolerated for equipment variance, never lower)."
+        },
+        "bit_depth": {
+          "type": "integer",
+          "enum": [16, 24, 32],
+          "description": "24-bit is the FRIDAY master target; 16 is never acceptable for a new master, only listed for completeness of derived-copy tracking; 32 covers float masters."
+        },
+        "channels": {
+          "type": "integer",
+          "enum": [1, 2],
+          "description": "1 (mono) is required; 2 is flagged by QC per FRIDAY-V2-RECORDING-SPEC.md, not silently accepted."
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "peak_dbfs": {
+          "type": "number",
+          "maximum": 0,
+          "description": "Must be <= 0 dBFS; a clipped file (0 or above in practice) is flagged by QC, not silently accepted."
+        },
+        "checksum_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "recorded_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "mic": {
+          "type": "string",
+          "minLength": 1
+        },
+        "interface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "room": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rights_record_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Opaque reference to the FRIDAY Voice Provenance Record covering this asset's rights basis. An asset with no resolvable rights_record_id must never be used for training/conditioning/cloud upload (docs/voice-v2/FRIDAY-V2-PROVENANCE-SPEC.md)."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Free text. Must never contain contract text or real PII."
+        }
+      }
+    }
+  }
+}

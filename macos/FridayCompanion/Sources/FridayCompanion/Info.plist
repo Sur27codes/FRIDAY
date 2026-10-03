@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>com.friday.companion</string>
+	<key>CFBundleName</key>
+	<string>FridayCompanion</string>
+	<key>CFBundleExecutable</key>
+	<string>FridayCompanion</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>FRIDAY listens for the local "Hey Friday" wake phrase and, once activated, your spoken command. Audio never leaves this Mac and is never persisted.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>FRIDAY transcribes your spoken command (after "Hey Friday") on-device so it can be executed through the same local pipeline as typed commands. Audio never leaves this Mac and is never persisted.</string>
+</dict>
+</plist>

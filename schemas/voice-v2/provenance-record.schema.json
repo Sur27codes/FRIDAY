@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://friday.local/schemas/voice-v2/provenance-record.schema.json",
+  "title": "FRIDAY Voice Provenance Record V1",
+  "description": "P2-M5V9-B.3D.2. See docs/voice-v2/FRIDAY-V2-PROVENANCE-SPEC.md. One record documents one recording session's provenance. Contains NO raw contract/agreement text and NO real performer PII — speaker_id, engineer, and rights_record_id are opaque references that resolve only in secure, private, non-repository legal/document storage.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "provenance_id",
+    "speaker_id",
+    "rights_record_id",
+    "session_id",
+    "session_date",
+    "studio_or_location",
+    "engineer",
+    "mic",
+    "interface",
+    "room",
+    "rights_scope_summary",
+    "created_at"
+  ],
+  "properties": {
+    "provenance_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this provenance record."
+    },
+    "speaker_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Opaque reference to the performer. NEVER a real name."
+    },
+    "rights_record_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Opaque reference to the signed rights agreement covering this session. The agreement's actual content lives outside this repository entirely, in secure, private legal storage."
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "session_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "studio_or_location": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Generic label, never a home address."
+    },
+    "engineer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Opaque reference, not necessarily a real name."
+    },
+    "mic": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interface": {
+      "type": "string",
+      "minLength": 1
+    },
+    "room": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rights_scope_summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Short, non-legal-text summary only. Informational — the linked rights_record_id's actual agreement is authoritative, not this summary."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free text. Must never contain contract text or real PII."
+    }
+  }
+}
