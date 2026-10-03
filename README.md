@@ -4,7 +4,7 @@ A multi-process AI runtime for macOS: a Swift companion app supervises three Go 
 
 <div align="center">
 
-[![demo](https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=16&duration=2600&pause=900&color=64748B&center=true&vCenter=true&width=760&lines=Hey+Friday;still+here+-+you+don%27t+have+to+keep+saying+my+name;what%27s+my+battery+at;11%25+-+and+no%2C+I%27m+not+rounding+up+to+make+you+feel+better;%28no+wake+word%29+be+honest+with+me;that%27s+not+really+optional+for+me;...goes+quiet+-%3E+back+to+passive+listening)](https://github.com/Sur27codes/FRIDAY)
+[![demo](https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=16&duration=2600&pause=900&color=64748B&center=true&vCenter=true&width=760&lines=Hey+Friday;what%27s+my+battery+at;11%25+-+and+no%2C+I%27m+not+rounding+up+to+make+you+feel+better;%28no+wake+word%29+why%27s+the+sky+red+at+sunset;that%27s+just+physics%2C+I+don%27t+need+a+capability+for+that;say+Hey+Friday+again+mid-answer+and+I%27ll+stop+and+listen;that%27s+not+a+suggestion%2C+it%27s+just+how+barge-in+works;be+honest+with+me;that%27s+not+really+optional+for+me;...goes+quiet+-%3E+back+to+passive+listening)](https://github.com/Sur27codes/FRIDAY)
 
 </div>
 
