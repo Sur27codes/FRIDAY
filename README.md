@@ -4,7 +4,7 @@ A multi-process AI runtime for macOS: a Swift companion app supervises three Go 
 
 <div align="center">
 
-[![demo](https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=16&duration=2600&pause=900&color=64748B&center=true&vCenter=true&width=760&lines=Hey+Friday;what%27s+my+battery+at%3F;checking+the+real+value+-+not+guessing+-+74%25;%28no+wake+word%29+explain+gradient+descent+in+one+line;it+nudges+the+weights+toward+less+error%2C+one+step+at+a+time;%28no+wake+word%29+how%27s+that+different+from+backprop%3F;backprop+computes+the+gradient+-+this+decides+what+to+do+with+it;...goes+quiet+-%3E+back+to+passive+listening)](https://github.com/Sur27codes/FRIDAY)
+[![demo](https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=16&duration=2600&pause=900&color=64748B&center=true&vCenter=true&width=760&lines=Hey+Friday;still+here+-+you+don%27t+have+to+keep+saying+my+name;what%27s+my+battery+at;11%25+-+and+no%2C+I%27m+not+rounding+up+to+make+you+feel+better;%28no+wake+word%29+be+honest+with+me;that%27s+not+really+optional+for+me;...goes+quiet+-%3E+back+to+passive+listening)](https://github.com/Sur27codes/FRIDAY)
 
 </div>
 
